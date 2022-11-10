@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\FoodPartyController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ResturantCategoryController;
 use App\Http\Controllers\UserAddressController;
@@ -25,6 +26,8 @@ Route::middleware('guest')->group(function () {
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
+
+
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
@@ -68,5 +71,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/restaurant', RestaurantController::class);
     Route::resource('/food', FoodController::class);
     Route::resource('/discount', DiscountController::class);
+    Route::resource('/party',FoodPartyController::class);
+
+    Route::get('logout', [AuthenticatedSessionController::class, 'logout'])
+        ->name('logout');
 
 });

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Discount;
+use App\Models\Food;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
@@ -13,7 +15,9 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        //
+        return view('discount.index',[
+            'foods'=>Food::all()
+        ]);
     }
 
     /**
@@ -23,7 +27,7 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -45,7 +49,11 @@ class DiscountController extends Controller
      */
     public function show($id)
     {
-        //
+
+        return view('discount.show',[
+            'discount'=>Discount::all()
+        ]);
+
     }
 
     /**
@@ -56,7 +64,9 @@ class DiscountController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('discount.edit',[
+            'food'=>Food::find($id)
+        ]);
     }
 
     /**
@@ -68,7 +78,22 @@ class DiscountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //id	name	description	present	food_id	created_at	updated_at
+//       return  $request->food_id;
+        $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'description' => ['required', 'string', 'max:255'],
+            'present'=> ['required'],
+        ]);
+
+        $user = Discount::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'present'=>$request->present,
+            'food_id'=>$request->food_id,
+        ]);
+        return redirect('discount');
+
     }
 
     /**
@@ -79,6 +104,7 @@ class DiscountController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Discount::destroy($id);
+        return redirect('discount');
     }
 }

@@ -12,15 +12,14 @@
             <th scope="col" class="py-3 px-6">نام محصول</th>
             <th scope="col" class="py-3 px-6">قیمت</th>
             <th scope="col" class="py-3 px-6">مواد اولیه</th>
-            <th scope="col" class="py-3 px-6">کتگوری</th>
-            <th scope="col" class="py-3 px-6">ویرایش</th>
-            <th scope="col" class="py-3 px-6">حذف</th>
+            <th scope="col" class="py-3 px-6">ایدی رستوران</th>
+            <th scope="col" class="py-3 px-6">*</th>
+            <th scope="col" class="py-3 px-6">*</th>
+
         </tr>
         </thead>
 
         <tbody>
-
-        </tbody>
         @foreach($foods as $order)
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td class="py-4 px-6">
@@ -29,27 +28,27 @@
                 <td class="py-4 px-6">{{$order['name']}}</td>
                 <td class="py-4 px-6">{{$order['price']}}</td>
                 <td class="py-4 px-6">{{$order['materials']}}</td>
-                <td class="py-4 px-6">{{$order['cat_id']}}</td>
+                <td class="py-4 px-6">{{$order['restaurant_id']}}</td>
                 <td class="py-4 px-6">
-                    <a href="/food/{{ $order['id'] }}/edit">ویرایش</a>
+                    <a href="/discount/{{ $order['id'] }}/edit">اعمال تخفیف  </a>
+                </td>
+                <td class="py-4 px-6">
+                    <a href="/party/{{ $order['id'] }}/edit">بارتی</a>
                 </td>
 
-                <td class="py-4 px-6 text-red-600 ">
-                    <form action="/food/{{ $order['id'] }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <input type="submit" value="Delete" class="cursor-pointer">
-                    </form>
-                </td>
             </tr>
         @endforeach
+        </tbody>
+
     </table>
-
-
-    <div class="text-center p-3">
-        <a href="/food/create">
-            <p class="font-bold text-xl">افزودن  غذا</p>
-        </a>
+    <div class="text-center mt-6 ">
+        <a href="/discount/show"> مشاهده تمام تخفیف ها </a>
+    </div>
+    <div class="text-center mt-6 ">
+        <a href="/party"> مشاهده تمام بارتی ها </a>
     </div>
 
+
 </div>
+
+

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CustomerController;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//public route for customers
+//Route::resource('/customer', CustomerController::class);
+
+
+Route::post('/register', [CustomerController::class,'register']);
+Route::post('/login', [CustomerController::class,'login']);
+
+
+// private route for  authenticated customer
+
+Route::group(['middleware'=>['auth:sanctum']], function () {
+
+
+    Route::get('/customer/search/{name}', [CustomerController::class,'search']);
+    Route::resource('/address', AddressController::class);
+
+    Route::get('/id', function(){  return auth('sanctum')->user()->id; });
+
+   // Route::get('/customer/{id}', [CustomerController::class,'show']);
+    Route::put('/customer/{id}', [CustomerController::class,'update']); //personal info change
+
+  //  Route::post('/allFood', [CustomerController::class,'allFood']);
+    Route::post('/logout', [CustomerController::class,'logout']);
+
+
+    Route::get('/restaurant', [CustomerController::class,'restaurants']);
+    Route::get('/restaurant/{id}', [CustomerController::class,'restaurant']);
+    Route::get('restaurant/{id}/food', [CustomerController::class,'food']);
+    });
+
+

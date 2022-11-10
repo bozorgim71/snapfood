@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FoodParty;
 use App\Models\Food;
-use App\Models\Restaurant;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class FoodController extends Controller
+class FoodPartyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,22 +15,8 @@ class FoodController extends Controller
      */
     public function index()
     {
-        $id=Auth::user()->id;
-
-        $rest=Restaurant::all();
-$rest_id=0;
-        foreach ($rest as $s)
-        {
-            if($s['user_id']==$id){
-                $rest_id = $s['id'];
-            }
-        }
-
-
-      // return Food::all()->where('restaurant_id','=',$rest_id)->count();
-
-        return view('food.index',[
-            'foods'=> Food::all()->where('restaurant_id','=',$rest_id)
+        return view('party.index',[
+            'party'=>FoodParty::all()
         ]);
     }
 
@@ -42,7 +27,7 @@ $rest_id=0;
      */
     public function create()
     {
-        return view('food.create');
+
     }
 
     /**
@@ -54,29 +39,6 @@ $rest_id=0;
     public function store(Request $request)
     {
 
-
-        $request->validate([
-            'name' => ['required', 'string', 'max:100'],
-            'materials' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'max:55'],
-            'cat_id' => ['required'],
-            'rest_id' => ['required']
-        ]);
-
-
-
-       // $id=Auth::user()->id;
-
-        $user = Food::create([
-            'name' => $request->name,
-            'materials' => $request->materials,
-            'price'=>$request->price,
-            'cat_id'=> $request->cat_id,
-            'restaurant_id'=>$request->rest_id
-        ]);
-
-        return  redirect('/food');
-
     }
 
     /**
@@ -87,7 +49,11 @@ $rest_id=0;
      */
     public function show($id)
     {
-        //
+
+//        return view('party.show',[
+//            'discount'=>FoodParty::all()
+//        ]);
+
     }
 
     /**
@@ -98,8 +64,10 @@ $rest_id=0;
      */
     public function edit($id)
     {
-        return view('food.edit',[
-            'food'=> Food::find($id)
+        //return $id;
+
+        return view('party.edit',[
+            'food'=>Food::find($id)
         ]);
     }
 
@@ -112,9 +80,22 @@ $rest_id=0;
      */
     public function update(Request $request, $id)
     {
-        $book = Food::find($id);
-        $book->update(\request()->except(['_token', '_method']));
-        return redirect("/food");
+        //id	name	description	present	food_id	created_at	updated_at
+//       return  $request->food_id;
+        $request->validate([
+            'start' => ['required'],
+            'end' => ['required'],
+            'present'=> ['required'],
+        ]);
+
+        $user = FoodParty::create([
+            'start' => $request->start,
+            'end' => $request->end,
+            'present'=>$request->present,
+            'food_id'=>$request->food_id
+        ]);
+        return redirect('party');
+
     }
 
     /**
@@ -125,8 +106,7 @@ $rest_id=0;
      */
     public function destroy($id)
     {
-        Food::destroy($id);
-
-        return redirect('/food');
+        FoodParty::destroy($id);
+        return redirect('party');
     }
 }

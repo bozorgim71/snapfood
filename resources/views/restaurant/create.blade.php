@@ -7,11 +7,8 @@
 <form action="/restaurant" method="post">
     @csrf
 
-
-
     <div class="bg-gray-300 p-3">
         <div class=" col-1  p-3 text-center gap-3 justify-center px-5 ">
-
 
         <!-- name -->
             <div class="mt-4 px-4 ">
@@ -79,24 +76,23 @@
 
             <!-- longitude -->
             <div class="mt-4">
-                <x-input-label for="cat_id" :value="__('نوع رستوران')" />
+                <x-input-label for="rest_id" :value="__('نوع رستوران')" />
 
 
-                            <select name="cat_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                            <select name="rest_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
                                     rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
                                     dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                                     dark:focus:border-blue-500 text-center">
 
-                                <?php
-                                $services = \App\Models\RestaurantCategory::all();
-                                foreach ($services as $service){?>
-                                <option value=" <?= $service['id']?>" >
-                                        <?= $service['name']?>
+
+                                @foreach (\App\Models\RestaurantCategory::all() as $service)
+                                <option value="{{$service['id']}}">
+                                    {{$service['name']}}
                                 </option>
-                                <?php } ?>
+                                @endforeach
                             </select>
 
-                <x-input-error :messages="$errors->get('cat_id')" class="mt-2" />
+                <x-input-error :messages="$errors->get('rest_id')" class="mt-2" />
             </div>
 
 

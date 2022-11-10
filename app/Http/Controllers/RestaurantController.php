@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RestaurantController extends Controller
 {
@@ -39,6 +40,33 @@ class RestaurantController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([
+            'name' => ['required', 'string', 'max:55'],
+            'description' => ['required', 'string', 'max:55'],
+            'address' => ['required', 'string', 'max:55'],
+            'phone' => ['required', 'string', 'max:15'],
+            'latitude' => ['required'],
+            'longitude' => ['required'],
+            'account' => ['required', 'string', 'max:16'],
+            'rest_id' => ['required', 'integer'],
+        ]);
+
+
+        $id=Auth::user()->id;
+// 	name	description	phone	account	address	latitude	longitude	image_path	cat_id	user_id
+        $user = Restaurant::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'address' => $request->address,
+            'phone'=>$request->phone,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'account' => $request->account,
+            'user_id'=> $id,
+            'cat_id'=>$request->rest_id
+        ]);
+
+        return  redirect('/dashboard');
     }
 
     /**
@@ -86,6 +114,8 @@ class RestaurantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Restaurant::destroy($id);
+
+        return redirect('/restaurant');
     }
 }

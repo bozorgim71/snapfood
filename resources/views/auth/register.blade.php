@@ -1,21 +1,41 @@
-<script src="https://cdn.tailwindcss.com"></script>
 
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Laravel</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <style>
+
+    </style>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+    </style>
+</head>
+<body class="">
+
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
+
+            <div class=" col-1 justify-center  form-group">
+                <div class=" col-1 bg-gray-100 text-center mx-auto justify-center">
 
             <!-- Name -->
             <div>
                 <x-input-label for="name" :value="__('Name')" />
 
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+                <x-text-input id="name" class=" mt-1 " type="text" name="name" :value="old('name')" required autofocus />
 
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
@@ -24,7 +44,7 @@
             <div>
                 <x-input-label for="family" :value="__('Family')" />
 
-                <x-text-input id="family" class="block mt-1 w-full" type="text" name="family" :value="old('family')" required autofocus />
+                <x-text-input id="family" class="  mt-1  " type="text" name="family" :value="old('family')" required autofocus />
 
                 <x-input-error :messages="$errors->get('family')" class="mt-2" />
             </div>
@@ -33,7 +53,7 @@
             <div>
                 <x-input-label for="phone" :value="__('Phone')" />
 
-                <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required autofocus />
+                <x-text-input id="phone" class="  mt-1  " type="text" name="phone" :value="old('phone')" required autofocus />
 
                 <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             </div>
@@ -42,7 +62,7 @@
             <div class="mt-4">
                 <x-input-label for="email" :value="__('Email')" />
 
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+                <x-text-input id="email" class="  mt-1  " type="email" name="email" :value="old('email')" required />
 
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
@@ -51,7 +71,7 @@
             <div class="mt-4">
                 <x-input-label for="password" :value="__('Password')" />
 
-                <x-text-input id="password" class="block mt-1 w-full"
+                <x-text-input id="password" class="  mt-1 "
                                 type="password"
                                 name="password"
                                 required autocomplete="new-password" />
@@ -63,22 +83,27 @@
             <div class="mt-4">
                 <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
 
-                <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                <x-text-input id="password_confirmation" class=" mt-1 "
                                 type="password"
                                 name="password_confirmation" required />
 
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class=" items-center mt-4">
                 <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
                 </a>
 
-                <x-primary-button class="ml-4">
+                <x-primary-button class="  items-center justify-cenetr mt-4 ">
                     {{ __('Register') }}
                 </x-primary-button>
             </div>
+                </div>
+            </div>
+
         </form>
-    </x-auth-card>
-</x-guest-layout>
+
+
+</body>
+</html>

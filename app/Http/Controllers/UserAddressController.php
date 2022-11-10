@@ -28,7 +28,9 @@ $address=UserAddress::all()->where('user_id', '=', $id);
 //            ->get();
         return view('userAddress.index',[
             'address'=> $address
-        ]);    }
+        ]);
+
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -71,7 +73,7 @@ $id=Auth::user()->id;
             'plack' => $request->pelack,
             'user_id'=> $id
         ]);
-        //	 	latitude	longitude	state	city	avenue	street	plack	description	user_id
+
 
     }
 
