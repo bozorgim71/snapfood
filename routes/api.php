@@ -20,31 +20,31 @@ use Illuminate\Support\Facades\Route;
 //public route for customers
 //Route::resource('/customer', CustomerController::class);
 
-
-Route::post('/register', [CustomerController::class,'register']);
-Route::post('/login', [CustomerController::class,'login']);
+Route::post('/register', [CustomerController::class, 'register']);
+Route::post('/login', [CustomerController::class, 'login']);
 
 
 // private route for  authenticated customer
 
-Route::group(['middleware'=>['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth:sanctum']], function () {
 
-
-    Route::get('/customer/search/{name}', [CustomerController::class,'search']);
+   // Route::resource('/customer', AddressController::class);
+   // Route::get('/customer/search/{name}', [CustomerController::class, 'search']);
     Route::resource('/address', AddressController::class);
+  //  Route::delete('/customer', [CustomerController::class,'delete']);
+//    Route::get('/id', function () {
+//        return auth('sanctum')->user()->id;
+//    });
 
-    Route::get('/id', function(){  return auth('sanctum')->user()->id; });
+    // Route::get('/customer', [CustomerController::class,'show']);
+    Route::put('/editInfo', [CustomerController::class, 'update']); //personal info change
+    //  Route::post('/allFood', [CustomerController::class,'allFood']);
+    Route::post('/logout', [CustomerController::class, 'logout']);
 
-   // Route::get('/customer/{id}', [CustomerController::class,'show']);
-    Route::put('/customer/{id}', [CustomerController::class,'update']); //personal info change
+    Route::get('/restaurant', [CustomerController::class, 'restaurants']);
+    Route::get('/restaurant/{id}', [CustomerController::class, 'restaurant']);
+    Route::get('restaurant/{id}/food', [CustomerController::class, 'food']);
+});
 
-  //  Route::post('/allFood', [CustomerController::class,'allFood']);
-    Route::post('/logout', [CustomerController::class,'logout']);
-
-
-    Route::get('/restaurant', [CustomerController::class,'restaurants']);
-    Route::get('/restaurant/{id}', [CustomerController::class,'restaurant']);
-    Route::get('restaurant/{id}/food', [CustomerController::class,'food']);
-    });
-
-
+//
+//https://www.youtube.com/watch?v=rScUEZPeazY

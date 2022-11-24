@@ -21,6 +21,7 @@
 
         <tbody>
         @foreach($foods as $order)
+
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td class="py-4 px-6">
                     <a href="/foodCategory/{{$order['id']}}"> {{$order['id']}}</a>

@@ -10,4 +10,18 @@ class Food extends Model
     use HasFactory;
 
     protected $fillable = [  	'name',	'materials'	,'price'	,'image_path',	'cat_id',	'restaurant_id'];
+
+    public function category()
+    {
+        return $this->belongsToMany(FoodCategory::class);
+    }
+
+    public function discount()
+    {
+        return $this->hasMany(Discount::class);
+    }
+    public function foodparty()
+    {
+        return $this->hasMany(FoodParty::class);
+    }
 }

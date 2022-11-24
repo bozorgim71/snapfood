@@ -18,8 +18,8 @@ class FoodController extends Controller
     {
         $id=Auth::user()->id;
 
-        $rest=Restaurant::all();
-$rest_id=0;
+      $rest=Restaurant::where('user_id','=',$id)->get();
+        $rest_id=0;
         foreach ($rest as $s)
         {
             if($s['user_id']==$id){
@@ -63,8 +63,6 @@ $rest_id=0;
             'rest_id' => ['required']
         ]);
 
-
-
        // $id=Auth::user()->id;
 
         $user = Food::create([
@@ -75,7 +73,7 @@ $rest_id=0;
             'restaurant_id'=>$request->rest_id
         ]);
 
-        return  redirect('/food');
+        return  redirect('/restaurant');
 
     }
 
@@ -87,7 +85,18 @@ $rest_id=0;
      */
     public function show($id)
     {
-        //
+
+return $id;
+        $test=[];
+        foreach (Food::all() as $a)
+        {
+            if($a['restaurant_id']==$id) {$test[]=$a;}
+        }
+
+        return view('food.show',
+            [
+                'foods'=>$test
+            ]);
     }
 
     /**

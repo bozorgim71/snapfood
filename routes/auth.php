@@ -73,6 +73,31 @@ Route::middleware('auth')->group(function () {
     Route::resource('/discount', DiscountController::class);
     Route::resource('/party',FoodPartyController::class);
 
+    Route::get('/allfood', function(){
+        return view('allfood',[
+            'foods'=>\App\Models\Food::all()
+        ]);
+    });
+
+    Route::get('/allrest', function(){
+        return view('allrest',[
+            'foods'=>\App\Models\Restaurant::all()
+        ]);
+    });
+
+    Route::get('/fooddes', function(){
+        return view('fooddes',[
+            'discounts'=>\App\Models\Discount::all()
+        ]);
+    });
+    Route::get('/partydes', function(){
+        return view('partydes',[
+            'categories'=>\App\Models\FoodParty::all()
+        ]);
+    });
+
+
+
     Route::get('logout', [AuthenticatedSessionController::class, 'logout'])
         ->name('logout');
 

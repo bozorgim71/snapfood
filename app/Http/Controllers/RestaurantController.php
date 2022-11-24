@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Food;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,17 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        return view('restaurant.create',
+      $id=Auth::user()->id;
+
+       $test=[];
+       foreach (Restaurant::all() as $a)
+       {
+           if($a['user_id']==$id) {$test[]=$a;}
+       }
+
+        return view('restaurant.index',
         [
-           // 'restaurant'=>Restaurant::find(1)
+            'restaurants'=>$test
         ]);
     }
 
@@ -78,6 +87,18 @@ class RestaurantController extends Controller
     public function show($id)
     {
 
+        $food=[];
+        foreach (Food::all() as $a)
+        {
+            if($a['restaurant_id']==$id) {$food[]=$a;}
+        }
+
+        return view('restaurant.show',
+            [
+                'restaurant'=>Restaurant::find($id),
+                'foods'=>$food
+
+            ]);
     }
 
     /**
@@ -103,7 +124,9 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $book = Restaurant::find($id);
+        $book->update(\request()->except(['_token', '_method']));
+        return redirect("/restaurant");
     }
 
     /**

@@ -9,4 +9,9 @@ class RestaurantCategory extends Model
 {
     use HasFactory;
     protected  $fillable = ['name' , 'description'];
+
+    public function restaurant()
+    {
+        return $this->belongsToMany(Restaurant::class);
+    }
 }

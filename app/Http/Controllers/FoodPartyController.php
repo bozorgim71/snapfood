@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FoodParty;
 use App\Models\Food;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FoodPartyController extends Controller
 {
@@ -15,8 +16,9 @@ class FoodPartyController extends Controller
      */
     public function index()
     {
+        $id=Auth::user()['id'];
         return view('party.index',[
-            'party'=>FoodParty::all()
+            'party'=>FoodParty::userParty($id)
         ]);
     }
 

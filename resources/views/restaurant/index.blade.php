@@ -12,13 +12,16 @@
             <th scope="col" class="py-3 px-6">طول جفرافیایی</th>
             <th scope="col" class="py-3 px-6">عرض جغرافیایی</th>
             <th scope="col" class="py-3 px-6"> ایدی کاربر</th>
-            <th scope="col" class="py-3 px-6">ایدی دسته بندی</th>
+            <th scope="col" class="py-3 px-6">*</th>
+            <th scope="col" class="py-3 px-6">*</th>
+            <th scope="col" class="py-3 px-6">*</th>
+            <th scope="col" class="py-3 px-6">*</th>
         </tr>
         </thead>
 
-        <tbody>
 
-        </tbody>
+        <tbody>
+        @foreach($restaurants as $restaurant)
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <td class="py-4 px-6">{{$restaurant['id']}}</td>
             <td class="py-4 px-6">{{$restaurant['name']}}</td>
@@ -30,7 +33,23 @@
             <td class="py-4 px-6">{{$restaurant['longitude']}}</td>
             <td class="py-4 px-6">{{$restaurant['user_id']}}</td>
             <td class="py-4 px-6">{{$restaurant['cat_id']}}</td>
+            <td class="py-4 px-6">
+                <a href="/restaurant/{{ $restaurant['id'] }}/edit">ویرایش</a>
+            </td>
+            <td class="py-4 px-6">
+                <a href="/restaurant/{{ $restaurant['id'] }}">غذاها</a>
+            </td>
+            <td class="py-4 px-6 text-red-600 ">
+                <form action="/restaurant/{{ $restaurant['id'] }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" value="Delete" class="cursor-pointer">
+                </form>
+            </td>
+            @endforeach
         </tr>
+        </tbody>
+
     </table>
 
 </div>
@@ -39,5 +58,5 @@
     <a class="text-bold text-xl" href="/restaurant/create">افزودن رستوران</a>
 </div>
 <div class="text-center mt-3">
-    <a class="text-bold text-xl" href="/restaurant/{{$restaurant['id']}}/edit">افزودن رستوران</a>
+    <a class="text-bold text-xl" href="/dashboard/">بازگشت</a>
 </div>

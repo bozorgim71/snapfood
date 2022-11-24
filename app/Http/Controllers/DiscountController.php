@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Discount;
 use App\Models\Food;
+use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DiscountController extends Controller
 {
@@ -15,8 +18,16 @@ class DiscountController extends Controller
      */
     public function index()
     {
+
+$id=Auth::user()['id'];
+   $user=User::find($id);
+
+ //  return $user->restaurant()->where('id', 1)->get();;
+       // return $user->food()->get();;
+
+
         return view('discount.index',[
-            'foods'=>Food::all()
+            'foods'=> $user->food()->get()
         ]);
     }
 
@@ -49,9 +60,11 @@ class DiscountController extends Controller
      */
     public function show($id)
     {
+        $id=Auth::user()['id'];
+      // return  Discount::userDiscount($id);
 
         return view('discount.show',[
-            'discount'=>Discount::all()
+            'discount'=>Discount::userDiscount($id)
         ]);
 
     }

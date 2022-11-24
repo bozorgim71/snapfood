@@ -6,41 +6,39 @@ use App\Models\Customer;
 use App\Models\Food;
 use App\Models\Restaurant;
 use App\Models\User;
-use App\Models\UserAddress;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
-
-
     // regiser customer
-    public function register(Request $request){
-       $customer= $request->validate(
+    public function register(Request $request)
+    {
+        $customer = $request->validate(
             [
-                'name'=>'required|string',
-                'family'=>'required|string',
-                'phone'=>'required|string|unique:users,phone',
-                'email'=>'required|string|unique:users,email',
-                'password'=>'required|string|confirmed'
+                'name' => 'required|string',
+                'family' => 'required|string',
+                'phone' => 'required|string|unique:users,phone',
+                'email' => 'required|string|unique:users,email',
+                'password' => 'required|string|confirmed'
             ]
         );
 
-        $customer= User::create([
-            'name'=> $customer['name'],
-            'family'=> $customer['family'],
-            'phone'=> $customer['phone'],
-            'email'=> $customer['email'],
-            'password'=>bcrypt($customer['password'] ),
-            'type'=>'customer'
+        $customer = User::create([
+            'name' => $customer['name'],
+            'family' => $customer['family'],
+            'phone' => $customer['phone'],
+            'email' => $customer['email'],
+            'password' => bcrypt($customer['password']),
+            'type' => 'customer'
         ]);
         $token = $customer->createToken('myapptoken')->plainTextToken;
-        $response=[
-            'customer'=>$customer,
-            'token'=>$token
+        $response = [
+            'customer' => $customer,
+            'token' => $token
         ];
-        return  response($response,201);
+        return response($response, 201);
     }
 
     public function logout(Request $request)
@@ -50,40 +48,37 @@ class CustomerController extends Controller
         auth()->user()->tokens()->delete();
 
         return [
-            'message'=>'user logged out'
+            'message' => 'user logged out'
         ];
     }
 
 
-
-
-    public function login (Request $request){
-
-        $customer= $request->validate(
+    public function login(Request $request)
+    {
+        $customer = $request->validate(
             [
-                'email'=>'required|string',
-                'password'=>'required|string'
+                'email' => 'required|string',
+                'password' => 'required|string'
             ]
         );
 
-    // check email
-        $user = User::where('email',$customer['email'] )->first();
+        // check email
+        $user = User::where('email', $customer['email'])->first();
 
         // check password
 
-        if(!$user || !Hash::check($customer['password'] , $user->password) )
-        {
+        if (!$user || !Hash::check($customer['password'], $user->password)) {
             return response([
-                'message'=> 'bad creds'
-            ],401);
+                'message' => 'bad creds'
+            ], 401);
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;
-        $response=[
-            'customer'=>$user,
-            'token'=>$token
+        $response = [
+            'customer' => $user,
+            'token' => $token
         ];
-        return  response($response,201);
+        return response($response, 201);
     }
 
     /**
@@ -99,7 +94,7 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -110,7 +105,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -121,13 +116,14 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $customer=User::find($id);
+        $id = auth('sanctum')->user()->id;
+        $customer = User::find($id);
         $customer->update($request->all());
         return $customer;
     }
@@ -135,30 +131,26 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-       return User::destroy($id);
+        return User::destroy($id);
     }
 
     public function search($name)
     {
-        return User::where('name','like','%'.$name.'%')->get();
+        return Food::where('name', 'like', '%' . $name . '%')->get();
     }
 
-    public function address()
-    {
-      $id=  auth('sanctum')->user()->id;
 
-        return UserAddress::where('user_id','=',$id)->get();
-    }
 
     public function restaurants()
     {
         return Restaurant::all();
     }
+
     public function restaurant($id)
     {
         return Restaurant::find($id);
@@ -166,6 +158,6 @@ class CustomerController extends Controller
 
     public function food($id)
     {
-        return Food::where('restaurant_id','=',$id)->get();
+        return Food::where('restaurant_id', '=', $id)->get();
     }
 }

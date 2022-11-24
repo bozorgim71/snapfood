@@ -14,22 +14,22 @@ class AddressController extends Controller
      */
     public function index()
     {
-        $id=  auth('sanctum')->user()->id;
+        $id = auth('sanctum')->user()->id;
 
-        return Address::where('user_id','=',$id)->get();
+        return Address::where('user_id', '=', $id)->get();
 
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //'title'	,'address',	'latitude'	,'longitude'	,'is_active',	'user_id'
-       $input= $request->validate([
+        $input = $request->validate([
             'title' => ['required', 'string', 'max:55'],
             'address' => ['required', 'string', 'max:255'],
             'latitude' => ['required'],
@@ -37,14 +37,14 @@ class AddressController extends Controller
 
         ]);
 
-        $id=  auth('sanctum')->user()->id;
+        $id = auth('sanctum')->user()->id;
 
         $user = Address::create([
             'title' => $input['title'],
             'address' => $input['address'],
             'latitude' => $input['latitude'],
             'longitude' => $input['longitude'],
-            'user_id'=> $id
+            'user_id' => $id
         ]);
 
         return $user;
@@ -53,7 +53,7 @@ class AddressController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -64,26 +64,44 @@ class AddressController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
 
-        $customer=Address::find($id);
-        $customer->update($request->all());
-        return $customer;
+        $address = Address::find($id);
+        $id = auth('sanctum')->user()->id;
+
+        if ($id == $address['user_id']) {
+
+            $address->update($request->all());
+            return $address;
+        } else {
+            return "error";
+
+        }
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $address = Address::find($id);
+
+        $user_id = auth('sanctum')->user()->id;
+
+        if ($user_id == $address['user_id']) {
+            Address::destroy($id);
+            return "address successfully deleted";
+        } else {
+            return "error";
+        }
     }
 }

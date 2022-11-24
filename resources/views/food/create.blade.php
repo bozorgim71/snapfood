@@ -15,7 +15,7 @@
             <div class="mt-4">
                 <x-input-label for="name" :value="__('name')" />
 
-                <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required />
+                <x-text-input id="name" class="  mt-1 " type="text" name="name" :value="old('name')" required />
 
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
@@ -23,7 +23,7 @@
             <div class="mt-4">
                 <x-input-label for="materials" :value="__('materials')" />
 
-                <x-text-input id="materials" class="block mt-1 w-full" type="text" name="materials" :value="old('materials')" required />
+                <x-text-input id="materials" class="  mt-1 " type="text" name="materials" :value="old('materials')" required />
 
                 <x-input-error :messages="$errors->get('materials')" class="mt-2" />
             </div>
@@ -32,7 +32,7 @@
             <div class="mt-4">
                 <x-input-label for="price" :value="__('price')" />
 
-                <x-text-input id="price" class="block mt-1 w-full" type="text" name="price" :value="old('price')" required />
+                <x-text-input id="price" class="  mt-1  " type="text" name="price" :value="old('price')" required />
 
                 <x-input-error :messages="$errors->get('price')" class="mt-2" />
             </div>
@@ -43,7 +43,7 @@
 
 
                 <select name="rest_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
-                                    rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+                                    rounded-lg focus:ring-blue-500 focus:border-blue-500   p-2.5 dark:bg-gray-700
                                     dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                                     dark:focus:border-blue-500 text-center">
                     @foreach (\App\Models\Restaurant::all() as $service)
@@ -61,7 +61,7 @@
                 <x-input-label for="cat_id" :value="__(' نوع غذا')" />
 
                 <select name="cat_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
-                                    rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
+                                    rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5 dark:bg-gray-700
                                     dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                                     dark:focus:border-blue-500 text-center">
 
