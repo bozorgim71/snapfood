@@ -70,7 +70,7 @@ class CustomerController extends Controller
         if (!$user || !Hash::check($customer['password'], $user->password)) {
             return response([
                 'message' => 'bad creds'
-            ], 401);
+            ], 201);
         }
 
         $token = $user->createToken('myapptoken')->plainTextToken;

@@ -32,10 +32,6 @@
 @can('admin-type')
 
 
-
-
-
-
                         {{--                    new category--}}
 
 
@@ -125,6 +121,25 @@
                             <div class="text-center p-3">
                                 <a href="/discount">
                                     <p class="font-bold text-xl">مشاهده غذا ها  اعمال تخفیف ها </p>
+                                </a>
+                            </div>
+                        </div>
+{{--  orders --}}
+                        <div class="p-6 bg-white border-b border-gray-200">
+
+                            <div class="text-center p-3">
+                                <a href="/orders">
+                                    <p class="font-bold text-xl">مشاهده سفارشات </p>
+                                </a>
+                            </div>
+                        </div>
+
+{{--    comment --}}
+                        <div class="p-6 bg-white border-b border-gray-200">
+
+                            <div class="text-center p-3">
+                                <a href="/comments">
+                                    <p class="font-bold text-xl">مشاهده کامنت ها </p>
                                 </a>
                             </div>
                         </div>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CustomerController;
 use App\Models\Customer;
 use Illuminate\Http\Request;
@@ -18,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 //public route for customers
-//Route::resource('/customer', CustomerController::class);
 
 Route::post('/register', [CustomerController::class, 'register']);
 Route::post('/login', [CustomerController::class, 'login']);
@@ -28,23 +29,32 @@ Route::post('/login', [CustomerController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-   // Route::resource('/customer', AddressController::class);
-   // Route::get('/customer/search/{name}', [CustomerController::class, 'search']);
-    Route::resource('/address', AddressController::class);
-  //  Route::delete('/customer', [CustomerController::class,'delete']);
-//    Route::get('/id', function () {
-//        return auth('sanctum')->user()->id;
-//    });
 
-    // Route::get('/customer', [CustomerController::class,'show']);
+   //  Route::get('/customer/search/{name}', [CustomerController::class, 'seaarch']);
+
+    Route::resource('/address', AddressController::class);
+
+
+
     Route::put('/editInfo', [CustomerController::class, 'update']); //personal info change
-    //  Route::post('/allFood', [CustomerController::class,'allFood']);
+
     Route::post('/logout', [CustomerController::class, 'logout']);
 
     Route::get('/restaurant', [CustomerController::class, 'restaurants']);
     Route::get('/restaurant/{id}', [CustomerController::class, 'restaurant']);
     Route::get('restaurant/{id}/food', [CustomerController::class, 'food']);
+
+    Route::get('/carts',[CartController::class,'carts']);
+    Route::get('/carts/{id}',[CartController::class,'cart']);
+    Route::post('/carts/add',[CartController::class,'store']);
+    Route::patch('/carts/add',[CartController::class,'update']);
+    Route::post('/carts/{id}/pay',[CartController::class,'pay']);
+
+
+
+    Route::get('/near',[AddressController::class,'near']);
+    Route::resource('/comments',CommentController::class);
 });
 
-//
+
 //https://www.youtube.com/watch?v=rScUEZPeazY

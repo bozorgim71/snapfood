@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -103,5 +105,43 @@ class AddressController extends Controller
         } else {
             return "error";
         }
+    }
+
+    public function near()
+    {
+
+        $user_id = auth('sanctum')->user()->id;
+
+        $user = User::find($user_id);
+        $address = $user->address()->get();
+
+        foreach ($address as $ad) {
+            if ($ad['is_active'] == 'active') {
+                $userLatitude = $ad['latitude'];
+                $userLongitude = $ad['longitude'];
+            }
+        }
+
+        $id = [];
+        $distance = [];
+        foreach (Restaurant::all() as $restaurant) {
+            $d = sqrt(($userLatitude - $restaurant['latitude']) ^ 2 +
+                ($userLongitude - $restaurant['longitude']) ^ 2);
+
+            $array[] = [
+                'distance' => $d,
+                'id' => $restaurant
+            ];
+        }
+
+
+        // return  $array;
+
+        usort($array, function ($a, $b) {
+            return $a['distance'] > $b['distance'];
+        });
+
+
+        return $array;
     }
 }
