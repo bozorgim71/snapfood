@@ -8,10 +8,12 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\FoodCategoryController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\FoodPartyController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ResturantCategoryController;
 use App\Http\Controllers\UserAddressController;
@@ -96,7 +98,9 @@ Route::middleware('auth')->group(function () {
         ]);
     });
 
-
+    Route::get('orders', [OrderController::class, 'ordersShow']);
+    Route::post('orders', [OrderController::class, 'ordersEdit']); //order
+    Route::get('comments', [CommentController::class, 'index']); //comments
 
     Route::get('logout', [AuthenticatedSessionController::class, 'logout'])
         ->name('logout');

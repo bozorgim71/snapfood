@@ -24,4 +24,10 @@ class Food extends Model
     {
         return $this->hasMany(FoodParty::class);
     }
+
+    public static function restaurant($id)
+    {
+        $restaurant=Food::find($id)['restaurant_id'];
+      return $restaurant;
+    }
 }
