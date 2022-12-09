@@ -135,7 +135,7 @@ class AddressController extends Controller
         }
 
 
-        // return  $array;
+
 
         usort($array, function ($a, $b) {
             return $a['distance'] > $b['distance'];

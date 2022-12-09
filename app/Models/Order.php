@@ -19,5 +19,10 @@ class Order extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function food()
+    {
+        return $this->belongsToMany(Food::class);
+    }
+
 
 }

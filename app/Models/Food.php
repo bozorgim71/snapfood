@@ -30,4 +30,9 @@ class Food extends Model
         $restaurant=Food::find($id)['restaurant_id'];
       return $restaurant;
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

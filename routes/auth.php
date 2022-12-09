@@ -97,10 +97,17 @@ Route::middleware('auth')->group(function () {
             'categories'=>\App\Models\FoodParty::all()
         ]);
     });
-
+//reports
+    Route::get('reports', [OrderController::class, 'reports']);
     Route::get('orders', [OrderController::class, 'ordersShow']);
+
     Route::post('orders', [OrderController::class, 'ordersEdit']); //order
     Route::get('comments', [CommentController::class, 'index']); //comments
+    Route::post('comments/{id}', [CommentController::class, 'update']); //comments update
+    Route::post('commentsDelete/{id}', [CommentController::class, 'destroy']); //commentsDelete
+
+    Route::get('adminComments', [CommentController::class, 'adminComments']); //comments
+    //adminComments
 
     Route::get('logout', [AuthenticatedSessionController::class, 'logout'])
         ->name('logout');
