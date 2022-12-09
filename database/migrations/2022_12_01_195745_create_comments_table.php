@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->string('message');
             $table->string('answer')->nullable();
-            $table->string('status')->default('seller_added');
+            $table->string('status')->default('received');
 
             $table->integer('score');
 

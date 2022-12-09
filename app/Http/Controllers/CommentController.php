@@ -17,32 +17,33 @@ class CommentController extends Controller
      */
     public function index()
     {
-
-
-
         return view('comments.comments',[
             'comments'=>Comment:: all()
         ]);
-
     }
-
+    public function adminComments()
+    {
+        return view('comments.adminComments',[
+            'comments'=>Comment:: all()
+        ]);
+    }
+//adminComments
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCommentValidationRequest $request)
+    public function store(Request $request)
     {
       //  return Order::find($request->order_id)['restaurant_id'];
-        $request->validated();
+       // $request->validated();
 
-      return "ok";
-//        $request->validate([
-//            'score' => ['required', 'integer', 'min:0','max:5'],
-//            'message' => ['required', 'string', 'max:255'],
-//            'order_id'=> ['required']
-//        ]);
+        $request->validate([
+            'score' => ['required', 'integer', 'min:0','max:5'],
+            'message' => ['required', 'string', 'max:255'],
+            'order_id'=> ['required']
+        ]);
 
 
 
@@ -95,9 +96,12 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+      //  return $request->answer;
+        $comment = Comment::find($id);
+        $comment->update($request->all());
 
+        return redirect('comments');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -106,7 +110,8 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comment::destroy($id);
+        return redirect('adminComments');
     }
 
     public function comments($id)

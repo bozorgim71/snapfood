@@ -49,14 +49,14 @@ class CartController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateOrderValidationRequest $request)
+    public function store(Request $request)
     {
-      $input=  $request->validate();
+     // $input=  $request->validate();
 
-//        $input = $request->validate([
-//            'count' => ['required', 'integer', 'min:1'],
-//            'food_id' => ['required', 'integer']
-//        ]);
+        $input = $request->validate([
+            'count' => ['required', 'integer', 'min:1'],
+            'food_id' => ['required', 'integer']
+        ]);
 
         $restaurant = Food::restaurant($input['food_id']);
 

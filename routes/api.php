@@ -50,11 +50,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::patch('/carts/add',[CartController::class,'update']);
     Route::post('/carts/{id}/pay',[CartController::class,'pay']);
 
-
-
     Route::get('/near',[AddressController::class,'near']);
     Route::resource('/comments',CommentController::class);
 });
 
 
-//https://www.youtube.com/watch?v=rScUEZPeazY
